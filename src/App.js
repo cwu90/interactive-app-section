@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import AddComment from './components/AddComments';
+import Comment from './components/Comment';
+import CommentsData from './data/CommentsData';
 
 function App() {
+  const [comments, updateComments] = useState(CommentsData[0].comments);
+  const [currentuser, setCurrentUser] = useState(CommentsData[0].currentUser);
+
+  const addComments = newComment => {
+    const updatedComments = [...comments, newComment];
+    updateComments(updatedComments);
+  };
+
+  const updateReplies = (replies, id) => {
+    let updatedComments = [...comments];
+    comments.forEach(data => {
+      if (data.id === id) {
+        data.replies = [...replies];
+      }
+      updateComments(updatedComments);
+    });
+  };
+
+  if (!comments || comments.length === 0) {
+    return <p>No Comments Yet</p>;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {comments.map(comment => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          comments={comments}
+          currentuser={currentuser}
+          updateReplies={updateReplies}
+        />
+      ))}
+      <AddComment
+        sendButton={'send'}
+        addComments={addComments}
+        currentuser={currentuser}
+      />
     </div>
   );
 }

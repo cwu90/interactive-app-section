@@ -1,13 +1,303 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary--clr-blue: hsl(238, 40%, 52%);
+  --primary--clr-red: hsl(358, 79%, 66%);
+  --primary--grayish-blue: hsl(239, 57%, 85%);
+  --primary--pale-red: hsl(357, 100%, 86%);
+
+  --neutral--dark-blue: hsl(212, 24%, 26%);
+  --neutral--grayish-blue: hsl(211, 10%, 45%);
+  --neutral--light-gray: hsl(223, 19%, 93%);
+  --neutral--verylight-gray: hsl(228, 33%, 97%);
+  --neutral--white: hsl(0, 0%, 100%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: 'Rubik', sans-serif;
+  background-color: var(--neutral--verylight-gray);
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 2rem 0;
+}
+
+.mainpage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.comment-container {
+  background-color: var(--neutral--white);
+  width: 750px;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.comment-wrapper {
+  padding: 1rem 1rem;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.comment-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.comment-rating {
+  background-color: var(--neutral--light-gray);
+  margin-bottom: 30px;
+  min-width: 40px;
+  height: 100px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.rating {
+  font-weight: 600;
+  color: var(--primary--clr-blue);
+}
+
+.comment-header {
+  display: flex;
+  /* flex-direction: row; */
+  gap: 1rem;
+}
+
+.username {
+  font-weight: 600;
+  color: var(--neutral--dark-blue);
+}
+
+.posted-time {
+  color: var(--neutral--grayish-blue);
+}
+
+.comment-btn {
+  margin-left: auto;
+}
+
+.user-pic {
+  width: 35px;
+}
+
+.reply-btn {
+  border: none;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.reply-icon {
+  margin: auto;
+}
+
+.comment-btn p {
+  font-weight: 600;
+  color: var(--primary--clr-blue);
+}
+
+.comment-context {
+  color: var(--neutral--grayish-blue);
+}
+
+/* Reply Style */
+
+.replies-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.reply-container {
+  /* background-color: var(--neutral--white); */
+  /* max-width: 670px; */
+  margin-left: auto;
+  /* border-radius: 10px; */
+  display: flex;
+  flex-direction: row;
+}
+
+.reply-line {
+  border: 0.1px solid var(--neutral--light-gray);
+  margin-left: 2.5rem;
+  margin-right: 2rem;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.reply-wrapper {
+  background-color: var(--neutral--white);
+  width: 670px;
+  border-radius: 10px;
+  padding: 1rem 1rem;
+  display: flex;
+  gap: 1.2rem;
+  margin: 1rem 1rem;
+}
+
+.reply-rating {
+  background-color: var(--neutral--light-gray);
+  margin-bottom: 30px;
+  min-width: 40px;
+  height: 100px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.username-highlight {
+  font-weight: 600;
+  color: var(--primary--clr-blue);
+}
+
+.reply-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.reply-header {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.reply-context {
+  color: var(--neutral--grayish-blue);
+}
+
+/* Add Comment Style */
+.addcomment-container {
+  background-color: var(--neutral--white);
+  min-width: 750px;
+  height: 162px;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.addcomment-wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+}
+
+.input-field {
+  position: relative;
+  padding: 10px 15px;
+  height: 85%;
+  width: 80%;
+  border-radius: 10px;
+  border: 2px solid var(--neutral--light-gray);
+  resize: none;
+}
+.input-field:focus {
+  outline: none;
+}
+
+.current-pic {
+  margin-bottom: 65px;
+}
+
+.add-btn {
+  border: none;
+  background-color: var(--primary--clr-blue);
+  color: var(--neutral--white);
+  text-transform: uppercase;
+  padding: 8px 22px;
+  border-radius: 5px;
+  margin-bottom: 65px;
+}
+
+@media (max-width: 48.75em) {
+  .comment-container {
+    width: 90%;
+  }
+
+  .reply-container {
+    width: 90%;
+  }
 }
