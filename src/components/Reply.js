@@ -1,18 +1,40 @@
 import IconReply from '../assets/icon-reply.svg';
 import IconPlus from '../assets/icon-plus.svg';
 import IconMinus from '../assets/icon-minus.svg';
-import testAvatar from '../assets/avatars/image-amyrobson.png';
 import { useState } from 'react';
 
-function Reply({ replies }) {
+function Reply({ replies, counter, type, updateScore, currentuser }) {
+  const [score, setScore] = useState(counter);
+  const [voted, setVoted] = useState(counter.voted ?? false);
+
+  const handleAdd = () => {
+    if (replies.user.username === currentuser.username) return;
+    if (voted === false) {
+      let n = score + 1;
+      setScore(n);
+      updateScore(n, replies.id, type, 'upvote');
+      setVoted(true);
+    }
+  };
+
+  const handleMinus = () => {
+    if (replies.user.username === currentuser.username) return;
+    if (voted === true) {
+      let n = score - 1;
+      setScore(n);
+      updateScore(n, replies.id, type, 'downvote');
+      setVoted(false);
+    }
+  };
+
   return (
     <div className="reply-container">
       <hr className="reply-line" />
       <div className="reply-wrapper">
         <div className="reply-rating">
-          <img src={IconPlus} alt="plus-icon" />
-          <p className="rating">{replies.score}</p>
-          <img src={IconMinus} alt="minus-icon" />
+          <img src={IconPlus} onClick={handleAdd} alt="plus-icon" />
+          <p className="rating">{score}</p>
+          <img src={IconMinus} onClick={handleMinus} alt="minus-icon" />
         </div>
         <div className="reply-body">
           <div className="reply-header">

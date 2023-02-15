@@ -8,9 +8,19 @@ import { useState } from 'react';
 import Reply from './Reply';
 import AddComment from './AddComments';
 
-function Comment({ comment, comments, currentuser, updateReplies }) {
+function Comment({
+  comment,
+  comments,
+  currentuser,
+  updateReplies,
+  counter,
+  updateScore,
+  type,
+}) {
   const [replyMode, setReplyMode] = useState(false);
-  const [replying, setReplying] = useState(comment.replies);
+  const [score, setScore] = useState(counter);
+  const [voted, setVoted] = useState(counter.voted ?? false);
+  // const [isDisabled, setIsDisabled] = useState(false);
 
   const clickHandlerReply = e => {
     e.preventDefault();
@@ -23,14 +33,36 @@ function Comment({ comment, comments, currentuser, updateReplies }) {
     setReplyMode(false);
   };
 
+  //Adding to score
+  const handleAdd = () => {
+    if (comment.user.username === currentuser.username) return;
+    if (voted === false) {
+      let n = score + 1;
+      setScore(n);
+      updateScore(n, comment.id, type, 'upvote');
+      setVoted(true);
+    }
+  };
+
+  //Substracting to score
+  const handleMinus = () => {
+    if (comment.user.username === currentuser.username) return;
+    if (voted === true) {
+      let n = score - 1;
+      setScore(n);
+      updateScore(n, comment.id, type, 'downvote');
+      setVoted(false);
+    }
+  };
+
   return (
     <>
       <div className="comment-container">
         <div className="comment-wrapper">
           <div className="comment-rating">
-            <img src={IconPlus} alt="plus-icon" />
-            <p className="rating">{comment.score}</p>
-            <img src={IconMinus} alt="minus-icon" />
+            <img src={IconPlus} onClick={handleAdd} alt="plus-icon" />
+            <p className="rating">{score}</p>
+            <img src={IconMinus} onClick={handleMinus} alt="minus-icon" />
           </div>
           <div className="comment-body">
             <div className="comment-header">
@@ -52,6 +84,7 @@ function Comment({ comment, comments, currentuser, updateReplies }) {
           </div>
         </div>
       </div>
+
       {replyMode && (
         <AddComment
           currentuser={currentuser}
@@ -65,7 +98,16 @@ function Comment({ comment, comments, currentuser, updateReplies }) {
       <div className="replies-container">
         {comment.replies !== [] &&
           comment.replies.map(reply => (
-            <Reply key={reply.id} replies={reply} />
+            <Reply
+              key={reply.id}
+              replies={reply}
+              type="reply"
+              updateScore={updateScore}
+              counter={reply.score}
+              handleMinus={handleMinus}
+              handleAdd={handleAdd}
+              currentuser={currentuser}
+            />
           ))}
       </div>
     </>
