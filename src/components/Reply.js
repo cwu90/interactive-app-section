@@ -1,12 +1,26 @@
 import IconReply from '../assets/icon-reply.svg';
 import IconPlus from '../assets/icon-plus.svg';
 import IconMinus from '../assets/icon-minus.svg';
+import IconDelete from '../assets/icon-delete.svg';
 import { useState } from 'react';
 
-function Reply({ replies, counter, type, updateScore, currentuser }) {
+function Reply({
+  replies,
+  counter,
+  type,
+  updateScore,
+  currentuser,
+  deleteReplies,
+}) {
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
 
+  //Delete replies
+  const deleteItem = e => {
+    console.log(replies.id);
+  };
+
+  //Separate addition function for replies
   const handleAdd = () => {
     if (replies.user.username === currentuser.username) return;
     if (voted === false) {
@@ -16,7 +30,7 @@ function Reply({ replies, counter, type, updateScore, currentuser }) {
       setVoted(true);
     }
   };
-
+  //Separate subtraction function for replies
   const handleMinus = () => {
     if (replies.user.username === currentuser.username) return;
     if (voted === true) {
@@ -45,6 +59,22 @@ function Reply({ replies, counter, type, updateScore, currentuser }) {
             />
             <div className="username">{replies.user.username}</div>
             <div className="posted-time">{replies.createdAt}</div>
+            {replies.user.username === currentuser.username && (
+              <div className="delete-btn" onClick={deleteItem}>
+                <img src={IconDelete} alt="delete" className="delete-icon" />
+                <p>Delete</p>
+              </div>
+            )}
+            {replies.user.username !== currentuser.username && (
+              <div className="delete-btn-hidden">
+                <img
+                  src={IconDelete}
+                  alt="delete-hidden"
+                  className="delete-icon"
+                />
+                <p>Delete</p>
+              </div>
+            )}
             <div className="comment-btn">
               <button className="reply-btn">
                 <img src={IconReply} alt="reply" className="reply-icon" />

@@ -95,11 +95,11 @@ select {
   padding: 2rem 0;
 }
 
-.mainpage {
+/* .mainpage {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
+} */
 .comment-container {
   background-color: var(--neutral--white);
   width: 750px;
@@ -151,12 +151,32 @@ select {
   color: var(--neutral--grayish-blue);
 }
 
-.comment-btn {
-  margin-left: auto;
-}
-
 .user-pic {
   width: 35px;
+}
+
+.delete-btn {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: auto;
+  gap: 5px;
+  margin-left: auto;
+}
+.delete-btn-hidden {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: auto;
+  gap: 5px;
+  margin-left: auto;
+  visibility: hidden;
+}
+.delete-btn p {
+  font-weight: 600;
+  color: var(--primary--clr-red);
+}
+
+.delete-icon {
+  margin-block: auto;
 }
 
 .reply-btn {
@@ -168,7 +188,7 @@ select {
 }
 
 .reply-icon {
-  margin: auto;
+  margin-block: auto;
 }
 
 .comment-btn p {

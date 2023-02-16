@@ -53,7 +53,6 @@ function App() {
   if (!comments || comments.length === 0) {
     return <p>No Comments Yet</p>;
   }
-
   return (
     <div className="App">
       {comments.map(comment => (

@@ -16,17 +16,19 @@ function Comment({
   counter,
   updateScore,
   type,
+  deleteReplies,
 }) {
   const [replyMode, setReplyMode] = useState(false);
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
-  // const [isDisabled, setIsDisabled] = useState(false);
 
+  //Toggle replyMode stage to display/remove addComment component
   const clickHandlerReply = e => {
     e.preventDefault();
     setReplyMode(prevReply => !prevReply);
   };
 
+  //Pushing newReply object to replies array
   const addReply = newReply => {
     const replies = [...comment.replies, newReply];
     updateReplies(replies, comment.id);
@@ -107,6 +109,7 @@ function Comment({
               handleMinus={handleMinus}
               handleAdd={handleAdd}
               currentuser={currentuser}
+              deleteReplies={deleteReplies}
             />
           ))}
       </div>
