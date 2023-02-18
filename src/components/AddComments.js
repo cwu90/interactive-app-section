@@ -90,29 +90,3 @@ function AddComment({
 }
 
 export default AddComment;
-
-// APP PAGe
-//  // add replies
-//  const updateReplies = (replies, id) => {
-//   let updatedComments = [...comments];
-//   updatedComments.forEach((data) => {
-//     if (data.id === id) {
-//       data.replies = [...replies];
-//     }
-//   });
-//   updateComments(updatedComments);
-// };
-
-// COMMENT {AGe}
-// const addReply = (newReply) => {
-//   const replies = [...commentData.replies, newReply];
-//   updateReplies(replies, commentData.id);
-//   setReplying(false);
-// };
-
-// REPLY PAGE
-//   // adding reply
-//   const addReply = (newReply) => {
-//     addNewReply(newReply);
-//     setReplying(false);
-//   };

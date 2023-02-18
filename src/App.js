@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import AddComment from './components/AddComments';
 import Comment from './components/Comment';
 import CommentsData from './data/CommentsData';
+import DeleteModal from './components/DeleteModal';
 
 function App() {
   const [comments, updateComments] = useState(CommentsData[0].comments);
@@ -23,6 +24,41 @@ function App() {
       }
       updateComments(updatedComments);
     });
+  };
+
+  //RE-DO (WORKING BEFORE)
+  // const deleteItems = (id, type, parentComment) => {
+  //   let updatedComments = [...comments];
+  //   let updatedReplies = [];
+
+  //   if (type === 'comment') {
+  //     updatedComments = comments.filter(comment => comment.id !== id);
+  //   } else if (type === 'reply') {
+  //     comments.forEach(comment => {
+  //       if (comment.id === parentComment) {
+  //         updatedReplies = comment.replies.filter(data => data.id !== id);
+  //         comment.replies = updatedReplies;
+  //       }
+  //     });
+  //   }
+  //   updateComments(updatedComments);
+  // };
+
+  const deleteItems = (id, type) => {
+    let updatedComments = [...comments];
+
+    if (type === 'comment') {
+      updatedComments = comments.filter(comment => comment.id !== id);
+    } else if (type === 'reply') {
+      updatedComments = comments.map(comment => {
+        const updatedReplies = comment.replies.filter(reply => reply.id !== id);
+        return {
+          ...comment,
+          replies: updatedReplies,
+        };
+      });
+    }
+    updateComments(updatedComments);
   };
 
   // Update Score
@@ -49,7 +85,7 @@ function App() {
     updateComments(updatedComments);
     console.log(comments);
   };
-
+  console.log(comments);
   if (!comments || comments.length === 0) {
     return <p>No Comments Yet</p>;
   }
@@ -65,6 +101,7 @@ function App() {
           counter={comment.score}
           type="comment"
           updateScore={updateScore}
+          deleteItems={deleteItems}
         />
       ))}
       <AddComment

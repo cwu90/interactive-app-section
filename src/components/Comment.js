@@ -7,21 +7,36 @@ import { useState } from 'react';
 // import ReplyContainer from './ReplyContainer';
 import Reply from './Reply';
 import AddComment from './AddComments';
+import DeleteModal from './DeleteModal';
 
 function Comment({
   comment,
-  comments,
   currentuser,
   updateReplies,
   counter,
   updateScore,
   type,
-  deleteReplies,
+  deleteItems,
+  deleteComments,
 }) {
   const [replyMode, setReplyMode] = useState(false);
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
+  const [toDelete, settoDelete] = useState(false);
 
+  //Changing the state that controls the Delete Modal
+  const toDeleteItem = () => {
+    settoDelete(prevsetDelete => !prevsetDelete);
+  };
+
+  //To delete comment.
+  const commentDelete = (id, type) => {
+    const finalType = type !== undefined ? type : 'comment';
+    const finalId = id !== undefined ? id : comment.id;
+    deleteItems(finalId, finalType, comment.id);
+    settoDelete(false);
+  };
+  console.log(toDelete);
   //Toggle replyMode stage to display/remove addComment component
   const clickHandlerReply = e => {
     e.preventDefault();
@@ -59,6 +74,16 @@ function Comment({
 
   return (
     <>
+      {toDelete === true && (
+        <DeleteModal
+          toDeleteItem={toDeleteItem}
+          deleteItems={deleteItems}
+          settoDelete={settoDelete}
+          // deleteItem={deleteItem}
+          commentDelete={commentDelete}
+          deleteComments={deleteComments}
+        />
+      )}
       <div className="comment-container">
         <div className="comment-wrapper">
           <div className="comment-rating">
@@ -75,6 +100,22 @@ function Comment({
               />
               <div className="username">{comment.user.username}</div>
               <div className="posted-time">{comment.createdAt}</div>
+              {comment.user.username === currentuser.username && (
+                <div className="delete-btn" onClick={toDeleteItem}>
+                  <img src={IconDelete} alt="delete" className="delete-icon" />
+                  <p>Delete</p>
+                </div>
+              )}
+              {comment.user.username !== currentuser.username && (
+                <div className="delete-btn-hidden">
+                  <img
+                    src={IconDelete}
+                    alt="delete-hidden"
+                    className="delete-icon"
+                  />
+                  <p>Delete</p>
+                </div>
+              )}
               <div className="comment-btn">
                 <button className="reply-btn" onClick={clickHandlerReply}>
                   <img src={IconReply} alt="reply" className="reply-icon" />
@@ -103,13 +144,16 @@ function Comment({
             <Reply
               key={reply.id}
               replies={reply}
+              counter={reply.score}
               type="reply"
               updateScore={updateScore}
-              counter={reply.score}
-              handleMinus={handleMinus}
-              handleAdd={handleAdd}
+              // handleMinus={handleMinus}
+              // handleAdd={handleAdd}
               currentuser={currentuser}
-              deleteReplies={deleteReplies}
+              deleteItems={deleteItems}
+              // toDeleteItem={toDeleteItem}
+              commentDelete={commentDelete}
+              comment={comment}
             />
           ))}
       </div>

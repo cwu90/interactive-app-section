@@ -3,6 +3,7 @@ import IconPlus from '../assets/icon-plus.svg';
 import IconMinus from '../assets/icon-minus.svg';
 import IconDelete from '../assets/icon-delete.svg';
 import { useState } from 'react';
+import DeleteModal from './DeleteModal';
 
 function Reply({
   replies,
@@ -10,14 +11,21 @@ function Reply({
   type,
   updateScore,
   currentuser,
-  deleteReplies,
+  comment,
+  deleteItem,
+  commentDelete,
 }) {
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
+  const [toDelete, settoDelete] = useState(false);
 
-  //Delete replies
-  const deleteItem = e => {
-    console.log(replies.id);
+  const toDeleteItem = () => {
+    settoDelete(prevsetDelete => !prevsetDelete);
+  };
+
+  const deleteReply = () => {
+    commentDelete(replies.id, 'reply');
+    toDeleteItem(false);
   };
 
   //Separate addition function for replies
@@ -43,6 +51,14 @@ function Reply({
 
   return (
     <div className="reply-container">
+      {toDelete === true && (
+        <DeleteModal
+          // toDeleteItem={toDeleteItem}
+          commentDelete={deleteReply}
+          settoDelete={settoDelete}
+          deleteItem={deleteItem}
+        />
+      )}
       <hr className="reply-line" />
       <div className="reply-wrapper">
         <div className="reply-rating">
@@ -60,7 +76,7 @@ function Reply({
             <div className="username">{replies.user.username}</div>
             <div className="posted-time">{replies.createdAt}</div>
             {replies.user.username === currentuser.username && (
-              <div className="delete-btn" onClick={deleteItem}>
+              <div className="delete-btn" onClick={toDeleteItem}>
                 <img src={IconDelete} alt="delete" className="delete-icon" />
                 <p>Delete</p>
               </div>
