@@ -2,6 +2,7 @@ import IconReply from '../assets/icon-reply.svg';
 import IconPlus from '../assets/icon-plus.svg';
 import IconMinus from '../assets/icon-minus.svg';
 import IconDelete from '../assets/icon-delete.svg';
+import IconEdit from '../assets/icon-edit.svg';
 import { useState } from 'react';
 import DeleteModal from './DeleteModal';
 
@@ -91,11 +92,20 @@ function Reply({
                 <p>Delete</p>
               </div>
             )}
+
             <div className="comment-btn">
-              <button className="reply-btn">
-                <img src={IconReply} alt="reply" className="reply-icon" />
-                <p>Reply</p>
-              </button>
+              {replies.user.username !== currentuser.username && (
+                <button className="reply-btn">
+                  <img src={IconReply} alt="reply" className="reply-icon" />
+                  <p>Reply</p>
+                </button>
+              )}
+              {replies.user.username === currentuser.username && (
+                <button className="edit-btn">
+                  <img src={IconEdit} alt="edit" className="edit-icon" />
+                  <p>Edit</p>
+                </button>
+              )}
             </div>
           </div>
           <div className="reply-context">

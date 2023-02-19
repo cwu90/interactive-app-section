@@ -23,10 +23,16 @@ function Comment({
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
   const [toDelete, settoDelete] = useState(false);
+  const [toedit, setToEdit] = useState(false);
 
   //Changing the state that controls the Delete Modal
   const toDeleteItem = () => {
     settoDelete(prevsetDelete => !prevsetDelete);
+  };
+
+  //Changing the state that controls the Edit Box
+  const toEditItem = () => {
+    setToEdit(prevsetDelete => !prevsetDelete);
   };
 
   //To delete comment.
@@ -117,13 +123,37 @@ function Comment({
                 </div>
               )}
               <div className="comment-btn">
-                <button className="reply-btn" onClick={clickHandlerReply}>
-                  <img src={IconReply} alt="reply" className="reply-icon" />
-                  <p>Reply</p>
-                </button>
+                {comment.user.username !== currentuser.username && (
+                  <button className="reply-btn" onClick={clickHandlerReply}>
+                    <img src={IconReply} alt="reply" className="reply-icon" />
+                    <p>Reply</p>
+                  </button>
+                )}
+                {comment.user.username === currentuser.username && (
+                  <button className="edit-btn" onClick={toEditItem}>
+                    <img src={IconEdit} alt="edit" className="edit-icon" />
+                    <p>Edit</p>
+                  </button>
+                )}
               </div>
             </div>
-            <div className="comment-context">{comment.content}</div>
+            <div className="comment-context">
+              {toedit === true ? (
+                <div className="edit-field">
+                  <textarea
+                    type="text"
+                    className="input-field-comment"
+                    placeholder="Add a comment..."
+                    // value={comment.content}
+                  >
+                    {comment.content}
+                  </textarea>
+                  <button className="update-btn">Update</button>
+                </div>
+              ) : (
+                <div>{comment.content}</div>
+              )}
+            </div>
           </div>
         </div>
       </div>

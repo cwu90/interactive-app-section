@@ -192,6 +192,23 @@ select {
   margin-block: auto;
 }
 
+.edit-btn {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: auto;
+  gap: 5px;
+  margin-left: auto;
+  border: none;
+  background-color: transparent;
+}
+.edit-btn {
+  cursor: pointer;
+}
+
+.edit-icon {
+  margin-block: auto;
+}
+
 .comment-btn p {
   font-weight: 600;
   color: var(--primary--clr-blue);
@@ -295,6 +312,29 @@ select {
   border: 2px solid var(--neutral--light-gray);
   resize: none;
 }
+
+/* Edit Field */
+.input-field-comment {
+  position: relative;
+  padding: 10px 15px;
+  height: 120px;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid var(--neutral--light-gray);
+  resize: none;
+}
+.update-btn {
+  border: none;
+  background-color: var(--primary--clr-blue);
+  color: var(--neutral--white);
+  text-transform: uppercase;
+  padding: 8px 22px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-top: 10px;
+  display: flex;
+}
+
 .input-field:focus {
   outline: none;
 }
