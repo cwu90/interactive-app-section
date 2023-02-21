@@ -15,10 +15,18 @@ function Reply({
   comment,
   deleteItem,
   commentDelete,
+  editItems,
 }) {
   const [score, setScore] = useState(counter);
+  const [content, setContent] = useState(replies.content);
   const [voted, setVoted] = useState(counter.voted ?? false);
   const [toDelete, settoDelete] = useState(false);
+  const [toedit, setToEdit] = useState(false);
+
+  //Changing the state that controls the Edit Box
+  const toEditItem = () => {
+    setToEdit(prevsetDelete => !prevsetDelete);
+  };
 
   const toDeleteItem = () => {
     settoDelete(prevsetDelete => !prevsetDelete);
@@ -27,6 +35,11 @@ function Reply({
   const deleteReply = () => {
     commentDelete(replies.id, 'reply');
     toDeleteItem(false);
+  };
+
+  const editReplies = () => {
+    editItems(replies.id, 'reply', content);
+    setToEdit(false);
   };
 
   //Separate addition function for replies
@@ -101,7 +114,7 @@ function Reply({
                 </button>
               )}
               {replies.user.username === currentuser.username && (
-                <button className="edit-btn">
+                <button className="edit-btn" onClick={toEditItem}>
                   <img src={IconEdit} alt="edit" className="edit-icon" />
                   <p>Edit</p>
                 </button>
@@ -109,12 +122,31 @@ function Reply({
             </div>
           </div>
           <div className="reply-context">
-            <p>
-              <span className="username-highlight">
-                @{replies.user.username + ' '}
-              </span>
-              {replies.content}
-            </p>
+            {toedit === true ? (
+              <div className="edit-field">
+                <textarea
+                  type="text"
+                  className="input-field-comment"
+                  placeholder="Add a comment..."
+                  onChange={e => {
+                    setContent(e.target.value);
+                  }}
+                  value={content}
+                >
+                  {replies.content}
+                </textarea>
+                <button className="update-btn" onClick={editReplies}>
+                  Update
+                </button>
+              </div>
+            ) : (
+              <div>
+                <span className="username-highlight">
+                  @{replies.user.username + ' '}
+                </span>
+                {replies.content}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import DeleteModal from './components/DeleteModal';
 function App() {
   const [comments, updateComments] = useState(CommentsData[0].comments);
   const [currentuser, setCurrentUser] = useState(CommentsData[0].currentUser);
-
+  console.log(comments);
   //Add Comment and Update
   const addComments = newComment => {
     const updatedComments = [...comments, newComment];
@@ -26,24 +26,28 @@ function App() {
     });
   };
 
-  //RE-DO (WORKING BEFORE)
-  // const deleteItems = (id, type, parentComment) => {
-  //   let updatedComments = [...comments];
-  //   let updatedReplies = [];
+  const editItems = (id, type, newContent) => {
+    let updatedComments = [...comments];
 
-  //   if (type === 'comment') {
-  //     updatedComments = comments.filter(comment => comment.id !== id);
-  //   } else if (type === 'reply') {
-  //     comments.forEach(comment => {
-  //       if (comment.id === parentComment) {
-  //         updatedReplies = comment.replies.filter(data => data.id !== id);
-  //         comment.replies = updatedReplies;
-  //       }
-  //     });
-  //   }
-  //   updateComments(updatedComments);
-  // };
+    if (type === 'comment') {
+      updatedComments.forEach(comment => {
+        if (comment.id === id) {
+          comment.content = newContent;
+        }
+      });
+    } else if (type === 'reply') {
+      updatedComments.forEach(comment => {
+        comment.replies.forEach(reply => {
+          if (reply.id === id) {
+            reply.content = newContent;
+          }
+        });
+      });
+    }
+    updateComments(updatedComments);
+  };
 
+  //Delete comment and reply
   const deleteItems = (id, type) => {
     let updatedComments = [...comments];
 
@@ -85,10 +89,11 @@ function App() {
     updateComments(updatedComments);
     console.log(comments);
   };
-  console.log(comments);
+
   if (!comments || comments.length === 0) {
     return <p>No Comments Yet</p>;
   }
+
   return (
     <div className="App">
       {comments.map(comment => (
@@ -102,6 +107,7 @@ function App() {
           type="comment"
           updateScore={updateScore}
           deleteItems={deleteItems}
+          editItems={editItems}
         />
       ))}
       <AddComment

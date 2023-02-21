@@ -18,8 +18,10 @@ function Comment({
   type,
   deleteItems,
   deleteComments,
+  editItems,
 }) {
   const [replyMode, setReplyMode] = useState(false);
+  const [content, setContent] = useState(comment.content);
   const [score, setScore] = useState(counter);
   const [voted, setVoted] = useState(counter.voted ?? false);
   const [toDelete, settoDelete] = useState(false);
@@ -35,6 +37,12 @@ function Comment({
     setToEdit(prevsetDelete => !prevsetDelete);
   };
 
+  const editComment = () => {
+    console.log(comment.id, content);
+    editItems(comment.id, 'comment', content);
+    setToEdit(false);
+  };
+
   //To delete comment.
   const commentDelete = (id, type) => {
     const finalType = type !== undefined ? type : 'comment';
@@ -42,7 +50,7 @@ function Comment({
     deleteItems(finalId, finalType, comment.id);
     settoDelete(false);
   };
-  console.log(toDelete);
+
   //Toggle replyMode stage to display/remove addComment component
   const clickHandlerReply = e => {
     e.preventDefault();
@@ -144,11 +152,16 @@ function Comment({
                     type="text"
                     className="input-field-comment"
                     placeholder="Add a comment..."
-                    // value={comment.content}
+                    onChange={e => {
+                      setContent(e.target.value);
+                    }}
+                    value={content}
                   >
                     {comment.content}
                   </textarea>
-                  <button className="update-btn">Update</button>
+                  <button className="update-btn" onClick={editComment}>
+                    Update
+                  </button>
                 </div>
               ) : (
                 <div>{comment.content}</div>
@@ -177,13 +190,11 @@ function Comment({
               counter={reply.score}
               type="reply"
               updateScore={updateScore}
-              // handleMinus={handleMinus}
-              // handleAdd={handleAdd}
               currentuser={currentuser}
               deleteItems={deleteItems}
-              // toDeleteItem={toDeleteItem}
               commentDelete={commentDelete}
               comment={comment}
+              editItems={editItems}
             />
           ))}
       </div>
