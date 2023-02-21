@@ -105,6 +105,7 @@ select {
 .comment-wrapper {
   padding: 1rem 1rem;
   display: flex;
+  flex-direction: row;
   gap: 1.2rem;
 }
 
@@ -135,6 +136,10 @@ select {
   display: flex;
   gap: 1rem;
 }
+
+/* .comment-btn {
+
+} */
 
 /* .comment-header .comment-btn {
   margin-left: auto;
@@ -167,6 +172,7 @@ select {
   gap: 5px;
   margin-left: auto;
   visibility: hidden;
+  /* display: none; */
 }
 .delete-btn p {
   font-weight: 600;
@@ -226,18 +232,14 @@ select {
 }
 
 .reply-container {
-  /* background-color: var(--neutral--white); */
-  /* max-width: 670px; */
-  margin-left: auto;
-  /* border-radius: 10px; */
+  /* margin-left: auto; */
   display: flex;
   flex-direction: row;
 }
 
 .reply-line {
   border: 0.1px solid var(--neutral--light-gray);
-  margin-left: 2.5rem;
-  margin-right: 2rem;
+  margin-inline: clamp(0.2rem, 3vw, 2rem);
   margin-block-start: 0;
   margin-block-end: 0;
 }
@@ -248,7 +250,7 @@ select {
   padding: 1rem 1rem;
   display: flex;
   gap: 1.2rem;
-  margin: 1rem 1rem;
+  margin-block: 1rem;
 }
 
 .reply-rating {
@@ -283,6 +285,24 @@ select {
 
 .reply-context {
   color: var(--neutral--grayish-blue);
+}
+
+/* Reply container - Add Commment  */
+.addcomment-replies-section {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.addcomment-replies-section .input-field {
+  width: 75%;
+}
+.addcomment-replies-section .addcomment-wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.replies-container .addcomment-container {
+  min-width: 90%;
 }
 
 /* Add Comment Style */
@@ -427,10 +447,119 @@ select {
 
 @media (max-width: 48.75em) {
   .comment-container {
-    width: 90%;
+    width: 95%;
   }
 
-  .reply-container {
-    width: 90%;
+  .replies-container {
+    width: 95%;
+  }
+
+  .reply-wrapper {
+    width: 100%;
+  }
+
+  .addcomment-container {
+    min-width: 95%;
+    height: 225px;
+  }
+
+  .current-pic {
+    margin-bottom: 0px;
+    margin-right: auto;
+  }
+
+  .add-btn {
+    margin-bottom: 0px;
+    margin-left: auto;
+    width: 100px;
+  }
+  .input-field {
+    width: 100%;
+    margin-inline: auto;
+  }
+  .addcomment-wrapper {
+    display: grid;
+  }
+
+  .addcomment-wrapper {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1.1fr 1fr;
+    grid-template-rows: 2fr 0.5fr;
+    gap: 10px 0px;
+    grid-template-areas:
+      'input-field input-field'
+      'current-pic add-btn';
+  }
+  .input-field {
+    grid-area: input-field;
+  }
+  .current-pic {
+    grid-area: current-pic;
+  }
+  .add-btn {
+    grid-area: add-btn;
+  }
+
+  .addcomment-replies-section .input-field {
+    width: 100%;
+  }
+
+  /* Replies Styling  */
+  .reply-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .reply-rating {
+    margin-bottom: 0px;
+    max-width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+@media (max-width: 36.56em) {
+  .comment-container {
+    position: relative;
+  }
+
+  .comment-wrapper {
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1.2rem;
+  }
+
+  .comment-rating {
+    margin-bottom: 0px;
+    max-width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .comment-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 25px;
+  }
+
+  .delete-btn {
+    position: absolute;
+    right: 80px;
+    bottom: 25px;
+  }
+
+  .reply-wrapper {
+    position: relative;
+  }
+
+  .delete-btn-hidden {
+    display: none;
   }
 }

@@ -195,6 +195,9 @@ function Comment({
               commentDelete={commentDelete}
               comment={comment}
               editItems={editItems}
+              addReply={addReply}
+              replyMode={replyMode}
+              updateReplies={updateReplies}
             />
           ))}
       </div>
